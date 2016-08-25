@@ -7,6 +7,7 @@
 	\usepackage[font=small,labelfont=bf]{caption}
 	\usepackage[english]{babel}
 	\usepackage{datetime}
+	\usepackage{listings}
 	\usepackage{fancyhdr}
 	\usepackage{lastpage}
 	\usepackage{float}
@@ -112,9 +113,7 @@
 	\section*{Abstract}
 	Google Chrome browser is known for it huge ammount of extensions that let users do almost everything they want, but there also malicious extensions that aim to steal personal information about the life, bank accounts and every other single piece of information of the users. In this paper we presents 3 extensions: ChromeLogger\cite{ChromeLogger}, Stealth Screenshot e Activity Logger;\\ \\
 	ChromeLogger is a keylogger and form grabber for Google Chrome that runs as an extension.	
-	ChromeLogger works by injecting javascript into all loaded web pages. The payload records keypresses using event listeners and saves them to Chrome's storage. Unlike other browser keyloggers, ChromeLogger runs natively in Chrome (on all OS's) without the need to install additional software.
-	The form grabber works in a similar way. Javascript is injected and event listeners are added for all forms. When a form is submitted, its data is saved to ChromeLogger's storage. This allows form data transferred over SSL to be saved in plaintext.
-	ChromeLogger's payload is written in pure JS and the log viewer is built using AngularJS.\\ \\
+	ChromeLogger works by injecting javascript into all loaded web pages.\\ \\
 	Stealth Screenshot make screenshots of the active tab based on a timer and keep them until every opened tab is closed. Users can access with a combination of key to all screenshots taken during the session.\\ \\
 	Activity Logger keep trace of all events related to extension and save them in Chrome storage. Users can check if there are installation, uninstallation, activation or deactivation of Chrome extension due to malicious code running in background.
 \section*{How Chrome Extension works}
@@ -141,6 +140,44 @@ Chrome also allows extensions to run scripts in a
 logic and state an extension needs for the entirety
 of the browser session and do not have any visibility
 to the user.\\
+For example this is the manifest of the stealth screenshot extension:
+\begin{lstlisting}
+{
+"name": "Stealth Screenshot Extension",
+"version": "0.1",
+"description": "This is a prototype
+ of a background screenshot extension",
+"background": {
+"persistent": true,
+"scripts": ["background.js"]
+},
+"commands": {
+"toggle": {
+"suggested_key": {
+"windows": "Ctrl+Shift+Y",
+"mac": "Command+Shift+Y",
+"chromeos": "Ctrl+Shift+U",
+"linux": "Ctrl+Shift+J"
+},
+"description": "My description"
+}
+},
+"browser_action": {
+"default_icon": "camera.png",
+"default_title": "Take a screen shot!"
+},
+"omnibox": { "keyword" : "show" },
+"permissions": [
+"storage",
+"tabs",
+"<all_urls>",
+"unlimitedStorage",
+"activeTab"
+],
+"manifest_version": 2
+}
+\end{lstlisting}
+as you can see, an extension has to declare in addition to all the permissions and all the interaction it has with the user such as an input in the omnibox or the click on the icon.
 \section*{ChromeLogger}
 \subsection*{Scope of the extension}
 The extension is a form grabber for Google Chrome running natively in it without the need to install additional external software. It works on every loaded web pages acting on every form in the pages.
@@ -155,11 +192,28 @@ The extension makes use of the following permissions in the manifest file:
 	\end{itemize}
 }
 \subsection*{How the extension work}
-When a web page is completely loaded ChromeLogger injects javascript into all forms. When a form is submitted, its data is saved to ChromeLogger's storage with the add of url and time data about the submission of the form.
-The extension saves all the keystroke by catching all the keyboard events.
-The user has also access to an option page where he can turn on or off some optional features and check all the logs inside a table where can filtering and ordering them by the data and url
+When a web page is completely loaded ChromeLogger injects javascript it. The payload records keypresses using event listeners and saves them to Chrome's storage. Unlike other browser keyloggers, ChromeLogger runs natively in Chrome (on all OS's) without the need to install additional software.
+The form grabber works in a similar way. Javascript is injected and event listeners are added for all forms. When a form is submitted, its data is saved to ChromeLogger's storage. This allows form data transferred over SSL to be saved in plaintext.
+ChromeLogger's payload is written in pure JS and the log viewer is built using AngularJS. When a form is submitted, its data is saved to ChromeLogger's storage with the add of url and time data about the submission of the form.
+The user has also access to an option page where he can turn on or off some optional features and check all the logs inside a table where can filtering and ordering them by the data and url.
+\subsubsection*{Injection}
+The injection is simple but effective:
+\begin{lstlisting}
+chrome.tabs.onUpdated.addListener
+(function(tabId, changeInfo) {
+if (changeInfo.status === 'complete') {
+chrome.tabs.executeScript(tabId, {
+allFrames: true, 
+file: 'src/inject/payload.js'
+});
+}
+});
+\end{lstlisting}
+this allows the extension to add to the standard javascript of the page a malign javascript that allows the extention to receive and save all the form submitted by user and also the messagge submitted through social apps (for example whatsapp web)
 \section*{Activity Logger Extension}
+
 \subsection*{Scope of the extension}
+
 The extension aims to keep traces about the activities of other extensions and let the user know
 about them through a dedicate page in which can check for every extension that are installed on the
 Chrome browser. This logger keep traces of logs even if some extensions are unistalled. \\
@@ -197,7 +251,14 @@ The source code of the extension we developed is downloadable \href{https://gith
 the scope of the stealth screenshot extension is to create a small prototype of an extension that catch screenshot in a regular interval with the minimum possible user interaction and obviously giving it back.
 \subsubsection*{Activation and screenshot collection}
 The extension uses the relatively new tab APIs given by chrome too take screenshot.
-The extension makes use of the "storage", "tabs", "all\_urls;", "unlimitedStorage", "activeTab" permissions in his manifest file. The extension works in a simple way: it triggers on a browser event, in this case the click on the icon of the extension, but there are other possibilities: we tested that there are no simple ways to take screenshot without no interaction, because the security policy of the API doesn't allow to take a scrrenshot without some kind of events, presuming that the user should be aware of what is happening; not triggering any event returns only null.
+The extension makes use of the following APIs:\begin{itemize}
+	\item storage
+	\item tabs
+	\item <all\_urls>
+	\item unlimited storage
+	\item active tab
+	\end{itemize}
+	 The extension works in a simple way: it triggers on a browser event, in this case the click on the icon of the extension, but there are other possibilities: we tested that there are no simple ways to take screenshot without no interaction, because the security policy of the API doesn't allow to take a scrrenshot without some kind of events, presuming that the user should be aware of what is happening; not triggering any event returns only null.
 Once triggered, the extension schedule all the future screenshot through the Javascript setTimeout method: this allows to take screenshot for hours, with only the need for a click to start.
 The screenshot are stored in an array visible to all the extention methods.
 \subsubsection*{Screenshot retrival}
@@ -215,7 +276,7 @@ Possible future works will focus on find a way to save those screenshot.
 The application should also be rewritten without the tab API, to avoid of the limitation of it.
 Javascript inject the code for the screenshot or use it for simulate the right events should do the work, but the time and the train needed to do it made impossible for us to test it for this paper.
 \section*{Conclusions}
-All the solution we have presented in thispaper makes use of the most used chrome permission, as already stated in the HULK paper\cite{HULK}
+All the solution we have presented in this paper makes use of the most used chrome permission, as already stated in the HULK paper\cite{HULK}
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=6cm]{permission.png}
@@ -224,7 +285,7 @@ All the solution we have presented in thispaper makes use of the most used chrom
 			more than one permission.}
 	\end{center}
 \end{figure}
-As shown in the screenshot extension, taking screenshot without user consensus should not be allowed to the API (just a popup should be enough)
+As shown in the screenshot extension, taking screenshot without user consensus should not be allowed to the API (just a popup should be enough).
 \begin{thebibliography}{2}
 	\bibitem{ChromeLogger}
 	Eric Zhang,\\
