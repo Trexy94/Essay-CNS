@@ -1,0 +1,100 @@
+	\documentclass[12pt]{article}
+	\usepackage{hyperref}
+	\usepackage{graphicx}
+	\usepackage[T1]{fontenc}
+	\usepackage[utf8]{inputenc}
+	\usepackage{color}
+	\usepackage[font=small,labelfont=bf]{caption}
+	\usepackage[english]{babel}
+	\usepackage{datetime}
+	\usepackage{fancyhdr}
+	\usepackage{lastpage}
+	\usepackage{float}
+	\pagestyle{fancy}
+	\fancyhf{}
+	\usepackage{multicol}
+	\rfoot{\center Page \thepage \hspace{1pt} of \pageref{LastPage}}
+	\renewcommand{\today}{\thisdayofweekname\ \the\day\ \monthname\ \the\year}
+	\title{Analisi sito}
+	\date{}
+	\author{Trevisan Davide}
+	\hypersetup{
+		colorlinks=true,       % false: boxed links; true: colored links
+		linkcolor=blue,          % color of internal links (change box color with linkbordercolor)
+		citecolor=green,        % color of links to bibliography
+		filecolor=blue,      % color of file links
+		urlcolor=red,
+		filecolor=red,
+		citecolor=red,
+	}
+	\begin{document}
+		\pagenumbering{arabic}
+		
+		
+		
+		\begin{titlepage}
+			
+			\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+			
+			\center % Center everything on the page
+			
+			%----------------------------------------------------------------------------------------
+			%	HEADING SECTIONS
+			%----------------------------------------------------------------------------------------
+			
+			\textsc{\LARGE University of Padova}\\[1.5cm] % Name of your university/college
+			\textsc{\Large Computer and Network Security}\\[0.5cm] % Major heading such as course name
+			
+			%----------------------------------------------------------------------------------------
+			%	TITLE SECTION
+			%----------------------------------------------------------------------------------------
+			
+			\HRule \\[0.4cm]
+			{ \huge insert-title-here}\\[0.3cm]
+			 %TODO insert title 
+			%Title of your document
+			\HRule \\[1.5cm]
+			
+			%----------------------------------------------------------------------------------------
+			%	AUTHOR SECTION
+			%----------------------------------------------------------------------------------------
+			
+			\begin{minipage}{0.4\textwidth}
+				\begin{flushleft} \large
+					\emph{Students:}\\
+					Davide Trevisan\\ % Your name
+					Andrea Multineddu\\
+				\end{flushleft}
+			\end{minipage}
+			~
+			\begin{minipage}{0.4\textwidth}
+				\begin{flushright}\large
+					\emph{Registration number:} \\
+					\textsc{1070686}\\ % matricola
+					\textsc{matricola}\\
+				\end{flushright}
+			\end{minipage}\\[1cm]
+			
+			%----------------------------------------------------------------------------------------
+			%	DATE SECTION
+			%----------------------------------------------------------------------------------------
+			
+			{\large \today}\\[1cm] % Date, change the \today to a set date if you want to be precise
+			
+			%----------------------------------------------------------------------------------------
+			%	LOGO SECTION
+			%----------------------------------------------------------------------------------------
+			
+			\includegraphics[scale=0.20]{Logo.png} % Include a department/university logo - this will require the graphicx package
+			
+			%----------------------------------------------------------------------------------------
+			
+			\vfill % Fill the rest of the page with whitespace
+		\end{titlepage}
+		
+		\newpage
+
+\begin{multicols}{2}
+\end{multicols}
+ 
+\end{document}
