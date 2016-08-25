@@ -1,0 +1,110 @@
+	\documentclass[12pt]{article}
+	\usepackage{hyperref}
+	\usepackage{graphicx}
+	\usepackage[T1]{fontenc}
+	\usepackage[utf8]{inputenc}
+	\usepackage{color}
+	\usepackage[font=small,labelfont=bf]{caption}
+	\usepackage[english]{babel}
+	\usepackage{datetime}
+	\usepackage{fancyhdr}
+	\usepackage{lastpage}
+	\usepackage{float}
+	\pagestyle{fancy}
+	\fancyhf{}
+	\usepackage{multicol}
+	\rfoot{\center Page \thepage \hspace{1pt} of \pageref{LastPage}}
+	\renewcommand{\today}{\thisdayofweekname\ \the\day\ \monthname\ \the\year}
+	\title{Security Essay}
+	\date{}
+	\author{Andrea Multineddu}
+	\hypersetup{
+		colorlinks=true,       % false: boxed links; true: colored links
+		linkcolor=blue,          % color of internal links (change box color with linkbordercolor)
+		citecolor=green,        % color of links to bibliography
+		filecolor=blue,      % color of file links
+		urlcolor=red,
+		filecolor=red,
+		citecolor=red,
+	}
+	\begin{document}
+		\pagenumbering{arabic}
+		
+		
+		
+		\begin{titlepage}
+			
+			\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+			
+			\center % Center everything on the page
+			
+			%----------------------------------------------------------------------------------------
+			%	HEADING SECTIONS
+			%----------------------------------------------------------------------------------------
+			
+			\textsc{\LARGE University of Padova}\\[1.5cm] % Name of your university/college
+			\textsc{\Large Computer and Network Security}\\[0.5cm] % Major heading such as course name
+			
+			%----------------------------------------------------------------------------------------
+			%	TITLE SECTION
+			%----------------------------------------------------------------------------------------
+			
+			\HRule \\[0.4cm]
+			{ \huge insert-title-here}\\[0.3cm]
+			 %TODO insert title 
+			%Title of your document
+			\HRule \\[1.5cm]
+			
+			%----------------------------------------------------------------------------------------
+			%	AUTHOR SECTION
+			%----------------------------------------------------------------------------------------
+			
+			\begin{minipage}{0.4\textwidth}
+				\begin{flushleft} \large
+					\emph{Students:}\\
+					Davide Trevisan\\ % Your name
+					Andrea Multineddu\\
+				\end{flushleft}
+			\end{minipage}
+			~
+			\begin{minipage}{0.4\textwidth}
+				\begin{flushright}\large
+					\emph{Registration number:} \\
+					\textsc{1070686}\\ % matricola
+					\textsc{1049261}\\
+				\end{flushright}
+			\end{minipage}\\[1cm]
+			
+			%----------------------------------------------------------------------------------------
+			%	DATE SECTION
+			%----------------------------------------------------------------------------------------
+			
+			{\large \today}\\[1cm] % Date, change the \today to a set date if you want to be precise
+			
+			%----------------------------------------------------------------------------------------
+			%	LOGO SECTION
+			%----------------------------------------------------------------------------------------
+			
+			\includegraphics[scale=0.20]{Logo.png} % Include a department/university logo - this will require the graphicx package
+			
+			%----------------------------------------------------------------------------------------
+			
+			\vfill % Fill the rest of the page with whitespace
+		\end{titlepage}
+		
+		\newpage
+
+\begin{multicols}{2}
+	\section{Introduction}
+	Nowadays the majority of browsers let users the possibility of customizing it in order to get a new feature o a new style of visualization to better match the taste of the single user.
+	All of this is achievable through the existing extensions for modern browsers. But there is also the opposite situation in which a malicious user tries to get personal information using this extensions.
+	
+	\section{Abstract}
+	Google Chrome browser is known for it huge ammount of extensions that let users do almost everything they want, but there also malicious extensions that aim to steal personal information about the life, bank accounts and every other single piece of information of the users. In this paper we presents 3 extensions: \cite{ChromeLogger}, Stealth Screenshot e Activity Logger;\\
+	\cite{ChromeLogger} is a keylogger and form grabber for Google Chrome that runs as an extension.	
+	\cite{ChromeLogger} works by injecting javascript into all loaded web pages. The payload records keypresses using event listeners and saves them to Chrome's storage. Unlike other browser keyloggers, ChromeLogger runs natively in Chrome (on all OS's) without the need to install additional software.
+	The form grabber works in a similar way. Javascript is injected and event listeners are added for all forms. When a form is submitted, its data is saved to ChromeLogger's storage. This allows form data transferred over SSL to be saved in plaintext.
+	\cite{ChromeLogger}'s payload is written in pure JS and the log viewer is built using AngularJS. Please feel free to send pull requests and raise issues.
+\end{multicols}
+ 
+\end{document}
