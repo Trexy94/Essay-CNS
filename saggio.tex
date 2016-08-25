@@ -164,7 +164,7 @@ also be installed manually by a user or an external program.
 Extension that are not downloaded through the official channel are flagged by Chrome when it starts	and the user is asked to disable them.
 However, the user can whitelist the extension through the console.
 \subsubsection*{Manually install an extension}
-	Once you have all the source code of an extension in a folder, go to  \textsc{chrome://extensions} (or find it in the menu in more tools > extensions), then activate the developer mode on the top right of the page. To install the extension, you just have to indicate where is this folder on your computer clicking on load unpacked extention. For .crx packaged extension, you have to drag them on the \textsc{chrome://extensions} tab and then confirm that you want to install it (it's not directly possible because of the stronger security policy of chrome)
+	Once you have all the source code of an extension in a folder, go to  \textsc{chrome://extensions} (or find it in the menu in more tools > extensions), then activate the developer mode on the top right of the page. To install the extension, you just have to indicate where is this folder on your computer clicking on load unpacked extention. For \textsc{.crx} packaged extension, you have to drag them on the \textsc{chrome://extensions} tab and then confirm that you want to install it (it's not directly possible because of the stronger security policy of chrome)
 \subsection*{Permission}
 Chrome requires extensions to list the
 permissions needed to access the different parts of the
@@ -300,11 +300,11 @@ var imglist=[];
  On that click, take a screenshot.
 chrome.browserAction.onClicked.addListener(function() {
 chrome.windows.create({type: "popup",state:"minimized"})
-intervallo=0;
-while(intervallo<30000000)//print x times, where x is the number of milliseconds/milleseconds for screenshot
+interval=0;
+while(interval<30000000)//print x times, where x is the number of milliseconds/milleseconds for screenshot
 {
-setTimeout(function(){Loop()},intervallo);    
-intervallo=intervallo+60000;
+setTimeout(function(){Loop()},interval);    
+interval=interval+60000;
 }
 });
 
