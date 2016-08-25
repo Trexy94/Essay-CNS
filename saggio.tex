@@ -15,7 +15,7 @@
 	\usepackage{multicol}
 	\rfoot{\center Page \thepage \hspace{1pt} of \pageref{LastPage}}
 	\renewcommand{\today}{\thisdayofweekname\ \the\day\ \monthname\ \the\year}
-	\title{Analisi sito}
+	\title{Essay}
 	\date{}
 	\author{Trevisan Davide}
 	\hypersetup{
@@ -96,10 +96,20 @@
 
 \begin{multicols}{2}
 \section{Stealth Screenshot Extension}
+This extension we developed is downloadable \href{URL}{here}
 \subsection{Scope of the extension}
-\subsection{How the extenssion work}
+the scope of the stealth screenshot extension is to create a small prototype of an extension that catch screenshot in a regular interval with the minimum possible user interaction and obviously giving it back.
+\subsection{How the extension work}
+The extension uses the relatively new tab APIs given by chrome too take screenshot.
+The extension makes use of the "storage", "tabs", "all\_urls;", "unlimitedStorage", "activeTab" permission in the manifest file.
 \subsection{Limitations}
+The major limitation of this extension is that the screenshot only lives until the extension is active: this implies that closing all the windows of chrome completely deletes the screenshot taken.
+This is a consequence of how the API and the chrome sandbox works.
+We are pretty confident that is possible to save those screenshots, but for our lack of knowledge we are not able at the moment to demonstrate it.
 \subsection{Future work}
+Possible future works will focus on find a way to save those screenshot.
+The application should also be rewritten without the tab API, to avoid of the limitation of it.
+Javascript injection the code for the screenshot should do the work, but the time and the train needed to do it made impossible for us to test it for this paper.
 \end{multicols}
  
 \end{document}
