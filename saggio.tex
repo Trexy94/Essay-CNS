@@ -96,20 +96,30 @@
 
 \begin{multicols}{2}
 \section{Stealth Screenshot Extension}
-This extension we developed is downloadable \href{URL}{here}
+The source code of the extension we developed is downloadable \href{URL}{here}
 \subsection{Scope of the extension}
 the scope of the stealth screenshot extension is to create a small prototype of an extension that catch screenshot in a regular interval with the minimum possible user interaction and obviously giving it back.
 \subsection{How the extension work}
+\subsubsection{Activation and screenshot collection}
 The extension uses the relatively new tab APIs given by chrome too take screenshot.
-The extension makes use of the "storage", "tabs", "all\_urls;", "unlimitedStorage", "activeTab" permission in the manifest file.
+The extension makes use of the "storage", "tabs", "all\_urls;", "unlimitedStorage", "activeTab" permissions in his manifest file. The extension works in a simple way: it triggers on a browser event, in this case the click on the icon of the extension, but there are other possibilities: we tested that there are no simple ways to take screenshot without no interaction, because the security policy of the API doesn't allow to take a scrrenshot without some kind of events, presuming that the user should be aware of what is happening; not triggering any event returns only null.
+Once triggered, the extension schedule all the future screenshot through the Javascript setTimeout method: this allows to take screenshot for hours, with only the need for a click to start
+\subsubsection{Screenshot retrival}
+The screenshot can be collected in two ways in the wxtension we developed:
+through a combination of key for retriving all screenshots (we programmed it on Ctrl+Shift+Y) or writing "show" in the omnibox, pressing "tab" and writing in the omnibox the number of screenshot to show (starting from the last one).
+\subsubsection{Performance}
+We tested that the extension is able to take screenshot with a interval of 1 minute for more than 2 hours without losing any screenshot.
+The application occupy less of 50MB of ram for an hour of screenshots taken every minute. The impact on the CPU is negligible.
+Screenshot retrival through the kay combo however can  crash chrome, although it never happened in our PC because of the great performance (we had an Intel i5 6400, with 8GB of DDR4 memory and SSD), but it got freezed for some seconds.
 \subsection{Limitations}
 The major limitation of this extension is that the screenshot only lives until the extension is active: this implies that closing all the windows of chrome completely deletes the screenshot taken.
-This is a consequence of how the API and the chrome sandbox works.
-We are pretty confident that is possible to save those screenshots, but for our lack of knowledge we are not able at the moment to demonstrate it.
+This is a consequence of how the API and the chrome sandbox works. We at the moment found no way to get around it, but we are pretty confident that is possible to save those screenshots, but for our lack of knowledge we are not able at the moment to demonstrate it.
 \subsection{Future work}
 Possible future works will focus on find a way to save those screenshot.
 The application should also be rewritten without the tab API, to avoid of the limitation of it.
-Javascript injection the code for the screenshot should do the work, but the time and the train needed to do it made impossible for us to test it for this paper.
+Javascript inject the code for the screenshot or use it for simulate the right events should do the work, but the time and the train needed to do it made impossible for us to test it for this paper.
+\section{conclusions}
+As shown in the screenshot extension, taking screenshot without user consensus should not be allowed to the API (just a popup should be enough)
 \end{multicols}
  
 \end{document}
