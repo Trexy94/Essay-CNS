@@ -1,0 +1,137 @@
+	\documentclass[12pt]{article}
+	\usepackage{hyperref}
+	\usepackage{graphicx}
+	\usepackage[T1]{fontenc}
+	\usepackage[utf8]{inputenc}
+	\usepackage{color}
+	\usepackage[font=small,labelfont=bf]{caption}
+	\usepackage[english]{babel}
+	\usepackage{datetime}
+	\usepackage{fancyhdr}
+	\usepackage{lastpage}
+	\usepackage{float}
+	\pagestyle{fancy}
+	\fancyhf{}
+	\usepackage{multicol}
+	\rfoot{\center Page \thepage \hspace{1pt} of \pageref{LastPage}}
+	\renewcommand{\today}{\thisdayofweekname\ \the\day\ \monthname\ \the\year}
+	\title{Security Essay}
+	\date{}
+	\author{Andrea Multineddu}
+	\hypersetup{
+		colorlinks=true,       % false: boxed links; true: colored links
+		linkcolor=blue,          % color of internal links (change box color with linkbordercolor)
+		citecolor=green,        % color of links to bibliography
+		filecolor=blue,      % color of file links
+		urlcolor=red,
+		filecolor=red,
+		citecolor=red,
+	}
+	\begin{document}
+		\pagenumbering{arabic}
+		
+		
+		
+		\begin{titlepage}
+			
+			\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+			
+			\center % Center everything on the page
+			
+			%----------------------------------------------------------------------------------------
+			%	HEADING SECTIONS
+			%----------------------------------------------------------------------------------------
+			
+			\textsc{\LARGE University of Padova}\\[1.5cm] % Name of your university/college
+			\textsc{\Large Computer and Network Security}\\[0.5cm] % Major heading such as course name
+			
+			%----------------------------------------------------------------------------------------
+			%	TITLE SECTION
+			%----------------------------------------------------------------------------------------
+			
+			\HRule \\[0.4cm]
+			{ \huge insert-title-here}\\[0.3cm]
+			 %TODO insert title 
+			%Title of your document
+			\HRule \\[1.5cm]
+			
+			%----------------------------------------------------------------------------------------
+			%	AUTHOR SECTION
+			%----------------------------------------------------------------------------------------
+			
+			\begin{minipage}{0.4\textwidth}
+				\begin{flushleft} \large
+					\emph{Students:}\\
+					Davide Trevisan\\ % Your name
+					Andrea Multineddu\\
+				\end{flushleft}
+			\end{minipage}
+			~
+			\begin{minipage}{0.4\textwidth}
+				\begin{flushright}\large
+					\emph{Registration number:} \\
+					\textsc{1070686}\\ % matricola
+					\textsc{1049261}\\
+				\end{flushright}
+			\end{minipage}\\[1cm]
+			
+			%----------------------------------------------------------------------------------------
+			%	DATE SECTION
+			%----------------------------------------------------------------------------------------
+			
+			{\large \today}\\[1cm] % Date, change the \today to a set date if you want to be precise
+			
+			%----------------------------------------------------------------------------------------
+			%	LOGO SECTION
+			%----------------------------------------------------------------------------------------
+			
+			\includegraphics[scale=0.20]{Logo.png} % Include a department/university logo - this will require the graphicx package
+			
+			%----------------------------------------------------------------------------------------
+			
+			\vfill % Fill the rest of the page with whitespace
+		\end{titlepage}
+		
+		\newpage
+
+\begin{multicols}{2}
+\section{Activity Logger Extension}
+\subsection{Scope of the extension}
+	The extension aims to keep traces about the activities of other extensions and let the user know
+	about them through a dedicate page in which can check for every extension that are installed on the
+	Chrome browser. This logger keep traces of logs even if some extensions are unistalled. \\
+	The extension makes use of the following permission in the manifest file:
+	{\fontsize{10}{10}\selectfont
+		\begin{itemize}
+			\item  management
+			\item  storage
+			\item  unlimitedStorage
+		\end{itemize}
+	}
+\subsection{How the extenssion work}
+	The extension at the browser start check the list of installed extension and updates the logs list with the one missing from it.
+	After this first check and update we create listener for the events related to extensions which are: 
+	{\fontsize{10}{10}\selectfont
+	\begin{itemize}
+		\item  chrome.management.onInstalled
+		\item  chrome.management.onUninstalled
+		\item  chrome.management.onEnabled
+		\item  chrome.management.onDisabled
+	\end{itemize}
+	}
+	Every time the user or some malicious code install, uninstall, enable or disable an extension a log of the triggered event is saved in the specific event log for the specific extension in the chrome storage.
+\subsection{Limitations}
+	The main limitation to this extension can be reconducted to the limitation imposed by or absence of Chrome APIs.
+	At the moment we can just check the events described early in the paper, every other event defined in Chrome APIs and the presence or absence of listener for a specific event.
+	A better controll on browser activity could be achieved by adding APIs, for example that return the name of extension from which is running codes in response to a specific event.
+\subsection{Future work}
+	The final aims of this extension are to log every single activity of installed extensions and jasvacript scripts
+	inside web pages in response to every event happening inside Chrome itself (like a modification inside the chrome
+	storafe area) or the web pages visited by the user (the pression of a button) and let the user check these logs 
+	in order to let users check some strange and unwanted activities caused by some malicious code. At this time, 
+	for what we have find out from our research on chrome API documentation we can just check if there is some code 
+	waiting a specific events that trigger it.
+	But this is also a double-edged weapon that can led to problems for privacy maintenance because let every user, capable of writing chrome extension the possibility to check every activity, but from the other hands let malicious users the possibility  on customizzable browsers to get knowledge about users routines, personal data and ad-hoc javascript code injection.
+\end{multicols}
+ 
+\end{document}
