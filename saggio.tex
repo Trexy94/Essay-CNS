@@ -141,6 +141,23 @@ Chrome also allows extensions to run scripts in a
 logic and state an extension needs for the entirety
 of the browser session and do not have any visibility
 to the user.\\
+\section*{ChromeLogger}
+\subsection*{Scope of the extension}
+The extension is a form grabber for Google Chrome running natively in it without the need to install additional external software. It works on every loaded web pages acting on every form in the pages.
+The extension manage to let the user checks for every submitted form all the keystroke done and some additional data about the time of submission. This is done by and additional page where we can turn on some additional option for the form grabber and visualize all the data collected by the extension.
+The extension makes use of the following permissions in the manifest file:
+{\fontsize{10}{10}\selectfont
+	\begin{itemize}
+		\item  <all\_urls>
+		\item  tabs
+		\item  storage
+		\item  unlimitedStorage
+	\end{itemize}
+}
+\subsection*{How the extension work}
+When a web page is completely loaded ChromeLogger injects javascript into all forms. When a form is submitted, its data is saved to ChromeLogger's storage with the add of url and time data about the submission of the form.
+The extension saves all the keystroke by catching all the keyboard events.
+The user has also access to an option page where he can turn on or off some optional features and check all the logs inside a table where can filtering and ordering them by the data and url
 \section*{Activity Logger Extension}
 \subsection*{Scope of the extension}
 The extension aims to keep traces about the activities of other extensions and let the user know
@@ -154,7 +171,7 @@ The extension makes use of the following permission in the manifest file:
 		\item  unlimitedStorage
 	\end{itemize}
 }
-\subsection*{How the extenssion work}
+\subsection*{How the extension work}
 The extension at the browser start check the list of installed extension and updates the logs list with the one missing from it.
 After this first check and update we create listener for the events related to extensions which are: 
 {\fontsize{10}{10}\selectfont
@@ -197,7 +214,7 @@ This is a consequence of how the API and the chrome sandbox works. We at the mom
 Possible future works will focus on find a way to save those screenshot.
 The application should also be rewritten without the tab API, to avoid of the limitation of it.
 Javascript inject the code for the screenshot or use it for simulate the right events should do the work, but the time and the train needed to do it made impossible for us to test it for this paper.
-\section*{conclusions}
+\section*{Conclusions}
 All the solution we have presented in thispaper makes use of the most used chrome permission, as already stated in the HULK paper\cite{HULK}
 \begin{figure}[H]
 	\begin{center}
