@@ -14,7 +14,12 @@
 	\fancyhf{}
 	\usepackage[margin=0.5in]{geometry}
 	\usepackage{multicol}
-	\rfoot{\center Page \thepage \hspace{1pt} of \pageref{LastPage}}
+	\newcommand\textline[4][t]{%
+		\par\smallskip\noindent\parbox[#1]{.333\textwidth}{\raggedright\texttt{}#2}%
+		\parbox[#1]{.333\textwidth}{\centering#3}%
+		\parbox[#1]{.333\textwidth}{\raggedleft\texttt{#4}}\par\smallskip%
+	}
+	\rfoot{\textline[t]{}{Page \thepage \hspace{1pt} of \pageref{LastPage}}{}}
 	\renewcommand{\today}{\thisdayofweekname\ \the\day\ \monthname\ \the\year}
 	\title{Essay}
 	\date{}
