@@ -120,17 +120,13 @@
 	\end{itemize}
 	}
 	Every time the user or some malicious code install, uninstall, enable or disable an extension a log of the triggered event is saved in the specific event log for the specific extension in the chrome storage.
+	The computation time is defined by the computation time of the Chrome search in his storage.
 \subsection{Limitations}
 	The main limitation to this extension can be reconducted to the limitation imposed by or absence of Chrome APIs.
 	At the moment we can just check the events described early in the paper, every other event defined in Chrome APIs and the presence or absence of listener for a specific event.
 	A better controll on browser activity could be achieved by adding APIs, for example that return the name of extension from which is running codes in response to a specific event.
 \subsection{Future work}
-	The final aims of this extension are to log every single activity of installed extensions and jasvacript scripts
-	inside web pages in response to every event happening inside Chrome itself (like a modification inside the chrome
-	storafe area) or the web pages visited by the user (the pression of a button) and let the user check these logs 
-	in order to let users check some strange and unwanted activities caused by some malicious code. At this time, 
-	for what we have find out from our research on chrome API documentation we can just check if there is some code 
-	waiting a specific events that trigger it.
+	The final aims of this extension are to log every single activity of installed extensions and jasvacript scripts inside web pages in response to every event happening inside Chrome itself (like a modification inside the chrome storafe area) or the web pages visited by the user (the pression of a button) and let the user check these logs	in order to let users check some strange and unwanted activities caused by some malicious code. At this time, for what we have find out from our research on chrome API documentation we can just check if there is some code waiting a specific events that trigger it.
 	But this is also a double-edged weapon that can led to problems for privacy maintenance because let every user, capable of writing chrome extension the possibility to check every activity, but from the other hands let malicious users the possibility  on customizzable browsers to get knowledge about users routines, personal data and ad-hoc javascript code injection.
 \end{multicols}
  
