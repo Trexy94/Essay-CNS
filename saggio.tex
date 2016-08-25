@@ -13,9 +13,9 @@
 	\usepackage{float}
 	\pagestyle{fancy}
 	\fancyhf{}
-	\addtolength{\oddsidemargin}{-3cm}
+	\addtolength{\oddsidemargin}{-2.4cm}
 	\addtolength{\evensidemargin}{-3cm}
-	\addtolength{\textwidth}{6cm}
+	\addtolength{\textwidth}{5cm}
 	\addtolength{\topmargin}{-3cm}
 	\addtolength{\textheight}{5cm}
 	\usepackage{multicol}
@@ -210,6 +210,8 @@ file: 'src/inject/payload.js'
 });
 \end{lstlisting}
 this allows the extension to add to the standard javascript of the page a malign javascript that allows the extention to receive and save all the form submitted by user and also the messagge submitted through social apps (for example whatsapp web)
+\subsubsection*{Performance}
+There aren't expensive operations or recursive function calls that requires a lot of computation so we can state that the impact on the CPU is negligible.
 \section*{Activity Logger Extension}
 
 \subsection*{Scope of the extension}
@@ -238,6 +240,8 @@ After this first check and update we create listener for the events related to e
 }
 Every time the user or some malicious code install, uninstall, enable or disable an extension a log of the triggered event is saved in the specific event log for the specific extension in the chrome storage.
 The computation time is defined by the computation time of the Chrome search in his storage.
+\subsubsection*{Performance}
+There aren't expensive operations or recursive function calls that requires a lot of computation so we can state that the impact on the CPU is negligible.
 \subsection*{Limitations}
 The main limitation to this extension can be reconducted to the limitation imposed by or absence of Chrome APIs.
 At the moment we can just check the events described early in the paper, every other event defined in Chrome APIs and the presence or absence of listener for a specific event.
@@ -277,15 +281,15 @@ The application should also be rewritten without the tab API, to avoid of the li
 Javascript inject the code for the screenshot or use it for simulate the right events should do the work, but the time and the train needed to do it made impossible for us to test it for this paper.
 \section*{Conclusions}
 All the solution we have presented in this paper makes use of the most used chrome permission, as already stated in the HULK paper\cite{HULK}
+As shown in the screenshot extension, taking screenshot without user consensus should not be allowed to the API (just a popup should be enough).
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[width=6cm]{permission.png}
+		\includegraphics[width=8cm]{permission.png}
 		\caption{The top 10 permissions found in the manifest
 			files for all extensions we ran. Extensions can include			
 			more than one permission.}
 	\end{center}
 \end{figure}
-As shown in the screenshot extension, taking screenshot without user consensus should not be allowed to the API (just a popup should be enough).
 \begin{thebibliography}{2}
 	\bibitem{ChromeLogger}
 	Eric Zhang,\\
