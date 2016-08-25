@@ -12,19 +12,9 @@
 	\usepackage{float}
 	\pagestyle{fancy}
 	\fancyhf{}
-\addtolength{\oddsidemargin}{-3cm}
-\addtolength{\evensidemargin}{-3cm}
-\addtolength{\textwidth}{6cm}
-\addtolength{\topmargin}{-3cm}
-\addtolength{\textheight}{5cm}
+	\usepackage[margin=0.5in]{geometry}
 	\usepackage{multicol}
-	
-	\newcommand\textline[4][t]{%
-		\par\smallskip\noindent\parbox[#1]{.333\textwidth}{\raggedright\texttt{}#2}%
-		\parbox[#1]{.333\textwidth}{\centering#3}%
-		\parbox[#1]{.333\textwidth}{\raggedleft\texttt{#4}}\par\smallskip%
-	}
-	\rfoot{\textline[t]{}{Page \thepage \hspace{1pt} of \pageref{LastPage}}{}}
+	\rfoot{\center Page \thepage \hspace{1pt} of \pageref{LastPage}}
 	\renewcommand{\today}{\thisdayofweekname\ \the\day\ \monthname\ \the\year}
 	\title{Essay}
 	\date{}
