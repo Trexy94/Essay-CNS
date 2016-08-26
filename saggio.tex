@@ -217,7 +217,7 @@ as you can see, an extension has to declare in addition to all the permissions a
 \section*{ChromeLogger}
 \subsection*{Scope of the extension}
 The extension is a form grabber for Google Chrome running natively in it without the need to install additional external software. It works on every loaded web pages acting on every form in the pages.
-The extension manage to let the user checks for every submitted form all the keystroke done and some additional data about the time of submission. This is done by and additional page where we can turn on some additional option for the form grabber and visualize all the data collected by the extension.
+The extension manage to let the user checks for every submitted form all the keystroke done and some additional data about the time of submission. This is done by an additional page where we can turn on some additional option for the form grabber and visualize all the data collected by the extension.
 The extension makes use of the following permissions in the manifest file:
 \begin{itemize}
 	\item  <all\_urls>
@@ -226,7 +226,7 @@ The extension makes use of the following permissions in the manifest file:
 	\item  unlimitedStorage
 \end{itemize}
 \subsection*{How the extension work}
-When a web page is completely loaded ChromeLogger injects javascript it. The payload records keypresses using event listeners and saves them to Chrome's storage. Unlike other browser keyloggers, ChromeLogger runs natively in Chrome (on all OS's) without the need to install additional software.
+When a web page is completely loaded ChromeLogger injects javascript in it. The payload records keypresses using event listeners and saves them to Chrome's storage. Unlike other browser keyloggers, ChromeLogger runs natively in Chrome (on all OS's) without the need to install additional software.
 The form grabber works in a similar way. Javascript is injected and event listeners are added for all forms. When a form is submitted, its data is saved to ChromeLogger's storage. This allows form data transferred over SSL to be saved in plaintext.
 ChromeLogger's payload is written in pure JS and the log viewer is built using AngularJS. When a form is submitted, its data is saved to ChromeLogger's storage with the add of URL and time data about the submission of the form.
 The user has also access to an option page where he can turn on or off some optional features and check all the logs inside a table where can filtering and ordering them by the data and URL.
@@ -272,8 +272,8 @@ The computation time is defined by the computation time of the Chrome search in 
 \subsubsection*{Performance}
 There aren't expensive operations or recursive function calls that requires a lot of computation so we can state that the impact on the CPU is negligible.
 \subsection*{Limitations}
-The main limitation to this extension can be reconducted to the limitation imposed by or absence of Chrome APIs.
-At the moment we can just check the events described early in the paper, every other event defined in Chrome APIs and the presence or absence of listener for a specific event.
+The main limitation of this extension can be reconducted to the limitation imposed by or to the absence of Chrome APIs.
+At the moment we can just check the events described early in the paper, every other event defined in Chrome APIs and the presence or the absence of listener for a specific event.
 A better control on browser activity could be achieved by adding APIs, for example that return the name of extension from which is running codes in response to a specific event.
 \subsection*{Future work}
 The final aims of this extension are to log every single activity of installed extensions and jasvacript scripts inside web pages in response to every event happening inside Chrome itself (like a modification inside the chrome storage area) or the web pages visited by the user (the pressure of a button) and let the user check these logs	in order to let users check some strange and unwanted activities caused by some malicious code. At this time, for what we have find out from our research on chrome API documentation we can just check if there is some code waiting a specific events that trigger it.
@@ -329,10 +329,10 @@ through a combination of key for retrieving all screenshots (we programmed it on
 \subsubsection*{Performance}
 We tested that the extension is able to take screenshot with a interval of 1 minute for more than 2 hours without losing any screenshot.
 The application occupy less of 50MB of RAM for an hour of screenshots taken every minute. The impact on the CPU is negligible.
-Screenshot retrieval through the key combo however can  crash chrome, although it never happened in our PC because of the great performance (we had an Intel i5 6400, with 8GB of DDR4 memory and SSD), but it got froze for some seconds.
+Screenshot retrieval through the key combo however can crash chrome, although it never happened in our PC because of the great performance (we had an Intel i5 6400, with 8GB of DDR4 memory and SSD), but it got frozen for some seconds.
 \subsection*{Limitations}
 The major limitation of this extension is that the screenshot only lives until the extension is active: this implies that closing all the windows of chrome completely deletes the screenshot taken.
-This is a consequence of how the API and the chrome sandbox works. We at the moment found no way to get around it, but we are pretty confident that is possible to save those screenshots, but for our lack of knowledge we are not able at the moment to demonstrate it.
+This is a consequence of how the API and the chrome sandbox works. At the moment, we found no way to get around it, but we are pretty much confident that is possible to save those screenshots, but due to our lack of knowledge we are not able at the moment to demonstrate it.
 \subsection*{Future work}
 Possible future works will focus on find a way to save those screenshot.
 The application should also be rewritten without the tab API, to avoid of the limitation of it.
@@ -349,7 +349,7 @@ Javascript inject the code for the screenshot or use it for simulate the right e
 Chrome should improve their task manager, to give the users more knowledge about what is happening in their PC, because is possible to create a timed or a smart bomb with a simple \textsc{while(true)} cycle, and it can crash chrome, because the sandbox sometimes can't handle it.
 All the solution we have presented in this paper makes use of the most used chrome permission, as already stated in the HULK paper\cite{HULK}
 As shown in the screenshot extension, taking screenshot without user consensus should not be allowed to the API (just a popup should be enough). \\
-All this 3 prototype of extensions aim to increase the security of the user browsering around the web pages, logging the user and basic behavior of the installed extension. The user can after check all what he has done in the current session helping him in being more conscious of the possible danger generated by malicious code running in background.\
+The ChromeLogger and Stealth Screenshot show the presence of issues reguarding the maintenance of user's privacy, and the Activity Logger can be used as a little warden against unwanted modification of extensions list. We still find out ways to bring Google Chrome to crash in a really simple way using the basics keyword of Javascript.\
 
 \begin{thebibliography}{3}
 	\bibitem{Google}
