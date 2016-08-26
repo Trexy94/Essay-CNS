@@ -143,14 +143,14 @@
 
 \begin{multicols}{2}
 	\section*{Introduction}
-	Nowadays the majority of browsers let users the possibility of customizing it in order to get a new feature o a new style of visualization to better match the taste of the single user.
-	All of this is achievable through the existing extensions for modern browsers. But there is also the opposite situation in which a malicious user tries to get personal information using this extensions.
+	Nowadays the majority of browsers let users the possibility of customizing it in order to get a new feature or a new style of visualization to better match the taste of the single user.
+	All of this is achievable through the existing extensions for modern browsers. But there is also the opposite situation in which a malicious user tries to get personal information using those extensions.
 	
 	\section*{Abstract}
-	Google Chrome browser is known for it huge amount of extensions that let users do almost everything they want, but there also malicious extensions that aim to steal personal information about the life, bank accounts and every other single piece of information of the users. In this paper we presents 3 extensions: ChromeLogger\cite{ChromeLogger}, Stealth Screenshot e Activity Logger;\\ \\
+	Google Chrome browser is known for it huge amount of extensions that let users do almost everything they want, but there are also malicious extensions that aim to steal personal information about the life, bank accounts and every other single piece of information of the users. In this paper we presents 3 extensions: ChromeLogger\cite{ChromeLogger}, Stealth Screenshot e Activity Logger;\\ \\
 	ChromeLogger is a keylogger and form grabber for Google Chrome that runs as an extension.	
 	ChromeLogger works by injecting javascript into all loaded web pages.\\ \\
-	Stealth Screenshot make screenshots of the active tab based on a timer and keep them until every opened tab is closed. Users can access with a combination of key to all screenshots taken during the session.\\ \\
+	Stealth Screenshot makes screenshots of the active tab based on a timer and keep them until every opened tab is closed. Users can access with a combination of key to all screenshots taken during the session.\\ \\
 	Activity Logger keep trace of all events related to extension and save them in Chrome storage. Users can check if there are installation, uninstallation, activation or deactivation of Chrome extension due to malicious code running in background.
 \section*{How Chrome Extension works}
 \subsection*{Background}
@@ -163,8 +163,8 @@ also be installed manually by a user or an external program.
 Extension that are not downloaded through the official channel are flagged by Chrome when it starts	and the user is asked to disable them.
 However, the user can whitelist the extension through the console.
 \subsubsection*{Manually install an extension}
-	Once you have all the source code of an extension in a folder, go to  \textsc{chrome://extensions} (or find it in the menu in more tools > extensions), then activate the developer mode on the top right of the page. To install the extension, you just have to indicate where is this folder on your computer clicking on load unpacked extension. For \textsc{.crx} packaged extension, you have to drag them on the \textsc{chrome://extensions} tab and then confirm that you want to install it (it's not directly possible because of the stronger security policy of chrome)
-\subsection*{Permission}
+	Once you have all the source code of an extension in a folder, go to  \textsc{chrome://extensions} (or find it in the menu in more tools > extensions), then activate the developer mode on the top right of the page. To install the extension, you just have to indicate where is the folder on your computer after clicking on load unpacked extension. For \textsc{.crx} packaged extension, you have to drag them on the \textsc{chrome://extensions} tab and then confirm that you want to install it (it's not directly possible because of the stronger security policy of chrome)
+\subsection*{Permissions}
 Chrome requires extensions to list the
 permissions needed to access the different parts of the
 extension API. The complete list of the permissions and their interaction can be found on google developer page\cite{Google}.\\
@@ -217,7 +217,7 @@ as you can see, an extension has to declare in addition to all the permissions a
 \section*{ChromeLogger}
 \subsection*{Scope of the extension}
 The extension is a form grabber for Google Chrome running natively in it without the need to install additional external software. It works on every loaded web pages acting on every form in the pages.
-The extension manage to let the user checks for every submitted form all the keystroke done and some additional data about the time of submission. This is done by an additional page where we can turn on some additional option for the form grabber and visualize all the data collected by the extension.
+The extension manages to let the user check, for every submitted form, all the keystrokes done and some additional data about the time of submission. This is done by an additional page where is possible to turn on some additional option for the form grabber and visualize all the data collected by the extension.
 The extension makes use of the following permissions in the manifest file:
 \begin{itemize}
 	\item  <all\_urls>
@@ -281,10 +281,11 @@ But this is also a double-edged weapon that can led to problems for privacy main
 \section*{Stealth Screenshot Extension}
 The source code of the extension we developed is downloadable \href{https://github.com/Trexy94/Stealth-screenshot}{here}
 \subsection*{Scope of the extension}
-the scope of the stealth screenshot extension is to create a small prototype of an extension that catch screenshot in a regular interval with the minimum possible user interaction and obviously giving it back.
+the scope of the stealth screenshot extension is to create a small prototype of an extension that catch screenshot at a regular interval with the minimum possible user interaction and obviously giving back the screenshot acquired.
+\subsection{How the extension work}
 \subsubsection*{Activation and screenshot collection}
 The extension uses the relatively new tab APIs given by chrome too take screenshot.
-The extension makes use of the following APIs:\begin{itemize}
+The extension makes use of the following permissions:\begin{itemize}
 	\item storage
 	\item tabs
 	\item <all\_urls>
@@ -320,7 +321,7 @@ console.log("Runtime error.");
 );};
 ............................
 	\end{lstlisting}
-	 The extension works in a simple way: it triggers on a browser event, in this case the click on the icon of the extension, but there are other possibilities: we tested that there are no simple ways to take screenshot without no interaction, because the security policy of the API doesn't allow to take a screenshot without some kind of events, presuming that the user should be aware of what is happening; not triggering any event returns only null.
+	 The extension works in a simple way: it triggers on a browser event, in this case the click on the icon of the extension, but there are other possibilities: we tested that there are no simple ways to take screenshot with no interaction, because the security policy of the API doesn't allow to take a screenshot without some kind of events, presuming that the user should be aware of what is happening; not triggering any event returns only null.
 Once triggered, the extension schedule all the future screenshot through the Javascript setTimeout method: this allows to take screenshot for hours, with only the need for a click to start.
 The screenshot are stored in an array visible to all the extension methods.
 \subsubsection*{Screenshot retrieval}
