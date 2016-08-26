@@ -147,7 +147,7 @@
 	All of this is achievable through the existing extensions for modern browsers. But there is also the opposite situation in which a malicious user tries to get personal information using this extensions.
 	
 	\section*{Abstract}
-	Google Chrome browser is known for it huge ammount of extensions that let users do almost everything they want, but there also malicious extensions that aim to steal personal information about the life, bank accounts and every other single piece of information of the users. In this paper we presents 3 extensions: ChromeLogger\cite{ChromeLogger}, Stealth Screenshot e Activity Logger;\\ \\
+	Google Chrome browser is known for it huge amount of extensions that let users do almost everything they want, but there also malicious extensions that aim to steal personal information about the life, bank accounts and every other single piece of information of the users. In this paper we presents 3 extensions: ChromeLogger\cite{ChromeLogger}, Stealth Screenshot e Activity Logger;\\ \\
 	ChromeLogger is a keylogger and form grabber for Google Chrome that runs as an extension.	
 	ChromeLogger works by injecting javascript into all loaded web pages.\\ \\
 	Stealth Screenshot make screenshots of the active tab based on a timer and keep them until every opened tab is closed. Users can access with a combination of key to all screenshots taken during the session.\\ \\
@@ -163,13 +163,13 @@ also be installed manually by a user or an external program.
 Extension that are not downloaded through the official channel are flagged by Chrome when it starts	and the user is asked to disable them.
 However, the user can whitelist the extension through the console.
 \subsubsection*{Manually install an extension}
-	Once you have all the source code of an extension in a folder, go to  \textsc{chrome://extensions} (or find it in the menu in more tools > extensions), then activate the developer mode on the top right of the page. To install the extension, you just have to indicate where is this folder on your computer clicking on load unpacked extention. For \textsc{.crx} packaged extension, you have to drag them on the \textsc{chrome://extensions} tab and then confirm that you want to install it (it's not directly possible because of the stronger security policy of chrome)
+	Once you have all the source code of an extension in a folder, go to  \textsc{chrome://extensions} (or find it in the menu in more tools > extensions), then activate the developer mode on the top right of the page. To install the extension, you just have to indicate where is this folder on your computer clicking on load unpacked extension. For \textsc{.crx} packaged extension, you have to drag them on the \textsc{chrome://extensions} tab and then confirm that you want to install it (it's not directly possible because of the stronger security policy of chrome)
 \subsection*{Permission}
 Chrome requires extensions to list the
 permissions needed to access the different parts of the
 extension API. The complete list of the permissions and their interaction can be found on google developer page\cite{Google}.\\
 Extensions must also specify a list of content scripts to indicate
-JavaScript files that will run inside of the web page, because this is a powerful feature that allows an extension to be indistinguishable to the webpage behaviour. Besides the content scripts that
+JavaScript files that will run inside of the web page, because this is a powerful feature that allows an extension to be indistinguishable to the web page behavior. Besides the content scripts that
 allow an extension to interact with a given page,
 Chrome also allows extensions to run scripts in a
 “background page” that often contain the
@@ -228,8 +228,8 @@ The extension makes use of the following permissions in the manifest file:
 \subsection*{How the extension work}
 When a web page is completely loaded ChromeLogger injects javascript it. The payload records keypresses using event listeners and saves them to Chrome's storage. Unlike other browser keyloggers, ChromeLogger runs natively in Chrome (on all OS's) without the need to install additional software.
 The form grabber works in a similar way. Javascript is injected and event listeners are added for all forms. When a form is submitted, its data is saved to ChromeLogger's storage. This allows form data transferred over SSL to be saved in plaintext.
-ChromeLogger's payload is written in pure JS and the log viewer is built using AngularJS. When a form is submitted, its data is saved to ChromeLogger's storage with the add of url and time data about the submission of the form.
-The user has also access to an option page where he can turn on or off some optional features and check all the logs inside a table where can filtering and ordering them by the data and url.
+ChromeLogger's payload is written in pure JS and the log viewer is built using AngularJS. When a form is submitted, its data is saved to ChromeLogger's storage with the add of URL and time data about the submission of the form.
+The user has also access to an option page where he can turn on or off some optional features and check all the logs inside a table where can filtering and ordering them by the data and URL.
 \subsubsection*{Injection}
 The injection is simple but effective:
 \begin{lstlisting}
@@ -242,7 +242,7 @@ file: 'src/inject/payload.js'
 }
 });
 \end{lstlisting}
-this allows the extension to add to the standard javascript of the page a malign javascript that allows the extention to receive and save all the form submitted by user and also the messagge submitted through social apps (for example whatsapp web)
+this allows the extension to add to the standard javascript of the page a malign javascript that allows the extension to receive and save all the form submitted by user and also the message submitted through social apps (for example whatsapp web)
 \subsubsection*{Performance}
 There aren't expensive operations or recursive function calls that requires a lot of computation so we can state that the impact on the CPU is negligible.
 \section*{Activity Logger Extension}
@@ -251,8 +251,8 @@ There aren't expensive operations or recursive function calls that requires a lo
 
 The extension aims to keep traces about the activities of other extensions and let the user know
 about them through a dedicate page in which can check for every extension that are installed on the
-Chrome browser. This logger keep traces of logs even if some extensions are unistalled. \\
-The extension makes use of the following permission in the manifest file:
+Chrome browser. This logger keep traces of logs even if some extensions are uninstalled. \\
+The extension makes use of the following permission the manifest file:
 \begin{itemize}
 	\item  management
 	\item  storage
@@ -274,10 +274,10 @@ There aren't expensive operations or recursive function calls that requires a lo
 \subsection*{Limitations}
 The main limitation to this extension can be reconducted to the limitation imposed by or absence of Chrome APIs.
 At the moment we can just check the events described early in the paper, every other event defined in Chrome APIs and the presence or absence of listener for a specific event.
-A better controll on browser activity could be achieved by adding APIs, for example that return the name of extension from which is running codes in response to a specific event.
+A better control on browser activity could be achieved by adding APIs, for example that return the name of extension from which is running codes in response to a specific event.
 \subsection*{Future work}
-The final aims of this extension are to log every single activity of installed extensions and jasvacript scripts inside web pages in response to every event happening inside Chrome itself (like a modification inside the chrome storafe area) or the web pages visited by the user (the pression of a button) and let the user check these logs	in order to let users check some strange and unwanted activities caused by some malicious code. At this time, for what we have find out from our research on chrome API documentation we can just check if there is some code waiting a specific events that trigger it.
-But this is also a double-edged weapon that can led to problems for privacy maintenance because let every user, capable of writing chrome extension the possibility to check every activity, but from the other hands let malicious users the possibility  on customizzable browsers to get knowledge about users routines, personal data and ad-hoc javascript code injection.
+The final aims of this extension are to log every single activity of installed extensions and jasvacript scripts inside web pages in response to every event happening inside Chrome itself (like a modification inside the chrome storage area) or the web pages visited by the user (the pressure of a button) and let the user check these logs	in order to let users check some strange and unwanted activities caused by some malicious code. At this time, for what we have find out from our research on chrome API documentation we can just check if there is some code waiting a specific events that trigger it.
+But this is also a double-edged weapon that can led to problems for privacy maintenance because let every user, capable of writing chrome extension the possibility to check every activity, but from the other hands let malicious users the possibility  on customizable browsers to get knowledge about users routines, personal data and ad-hoc javascript code injection.
 \section*{Stealth Screenshot Extension}
 The source code of the extension we developed is downloadable \href{https://github.com/Trexy94/Stealth-screenshot}{here}
 \subsection*{Scope of the extension}
@@ -300,7 +300,7 @@ var imglist=[];
 chrome.browserAction.onClicked.addListener(function() {
 chrome.windows.create({type: "popup",state:"minimized"})
 interval=0;
-while(interval<30000000)//print x times, where x is the number of milliseconds/milleseconds for screenshot
+while(interval<30000000)//print x times, where x is the number of milliseconds/milliseconds for screenshot
 {
 setTimeout(function(){Loop()},interval);    
 interval=interval+60000;
@@ -320,16 +320,16 @@ console.log("Runtime error.");
 );};
 ............................
 	\end{lstlisting}
-	 The extension works in a simple way: it triggers on a browser event, in this case the click on the icon of the extension, but there are other possibilities: we tested that there are no simple ways to take screenshot without no interaction, because the security policy of the API doesn't allow to take a scrrenshot without some kind of events, presuming that the user should be aware of what is happening; not triggering any event returns only null.
+	 The extension works in a simple way: it triggers on a browser event, in this case the click on the icon of the extension, but there are other possibilities: we tested that there are no simple ways to take screenshot without no interaction, because the security policy of the API doesn't allow to take a screenshot without some kind of events, presuming that the user should be aware of what is happening; not triggering any event returns only null.
 Once triggered, the extension schedule all the future screenshot through the Javascript setTimeout method: this allows to take screenshot for hours, with only the need for a click to start.
-The screenshot are stored in an array visible to all the extention methods.
-\subsubsection*{Screenshot retrival}
-The screenshot can be collected in two ways in the wxtension we developed:
-through a combination of key for retriving all screenshots (we programmed it on Ctrl+Shift+Y) or writing "show" in the omnibox, pressing "tab" and writing in the omnibox the number of screenshot to show (starting from the last one).
+The screenshot are stored in an array visible to all the extension methods.
+\subsubsection*{Screenshot retrieval}
+The screenshot can be collected in two ways in the extension we developed:
+through a combination of key for retrieving all screenshots (we programmed it on Ctrl+Shift+Y) or writing "show" in the omnibox, pressing "tab" and writing in the omnibox the number of screenshot to show (starting from the last one).
 \subsubsection*{Performance}
 We tested that the extension is able to take screenshot with a interval of 1 minute for more than 2 hours without losing any screenshot.
 The application occupy less of 50MB of RAM for an hour of screenshots taken every minute. The impact on the CPU is negligible.
-Screenshot retrival through the kay combo however can  crash chrome, although it never happened in our PC because of the great performance (we had an Intel i5 6400, with 8GB of DDR4 memory and SSD), but it got freezed for some seconds.
+Screenshot retrieval through the key combo however can  crash chrome, although it never happened in our PC because of the great performance (we had an Intel i5 6400, with 8GB of DDR4 memory and SSD), but it got froze for some seconds.
 \subsection*{Limitations}
 The major limitation of this extension is that the screenshot only lives until the extension is active: this implies that closing all the windows of chrome completely deletes the screenshot taken.
 This is a consequence of how the API and the chrome sandbox works. We at the moment found no way to get around it, but we are pretty confident that is possible to save those screenshots, but for our lack of knowledge we are not able at the moment to demonstrate it.
@@ -346,10 +346,10 @@ Javascript inject the code for the screenshot or use it for simulate the right e
 			more than one permission.}
 	\end{center}
 \end{figure}
-Chrome should improve their task manager, to give the usesr more knowledge about what is happening in their pc, because is possible to create a timed or a smart bomb with a simple \textsc{while(true)} cycle, and it can crash chrome, because the sandbox sometimes can't handle it.
+Chrome should improve their task manager, to give the users more knowledge about what is happening in their PC, because is possible to create a timed or a smart bomb with a simple \textsc{while(true)} cycle, and it can crash chrome, because the sandbox sometimes can't handle it.
 All the solution we have presented in this paper makes use of the most used chrome permission, as already stated in the HULK paper\cite{HULK}
 As shown in the screenshot extension, taking screenshot without user consensus should not be allowed to the API (just a popup should be enough). \\
-All this 3 prototype of extensions aim to increase the sicurity of the user browsering around the web pages, logging the user and basic behaviour of the installed extension. The user can after check all what he has done in the current session helping him in being more conscious of the possible danger generated by malicious code running in background.\
+All this 3 prototype of extensions aim to increase the security of the user browsering around the web pages, logging the user and basic behavior of the installed extension. The user can after check all what he has done in the current session helping him in being more conscious of the possible danger generated by malicious code running in background.\
 
 \begin{thebibliography}{3}
 	\bibitem{Google}
