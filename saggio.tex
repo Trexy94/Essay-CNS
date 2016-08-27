@@ -147,12 +147,14 @@
 	All of this is achievable through the existing extensions for modern browsers. But there is also the opposite situation in which a malicious user tries to get personal information using those extensions.
 	
 	\section*{Abstract}
-	Google Chrome browser is known for it huge amount of extensions that let users do almost everything they want, but there are also malicious extensions that aim to steal personal information about the life, bank accounts and every other single piece of information of the users. In this paper we presents three extensions: ChromeLogger\cite{ChromeLogger}, Stealth Screenshot e Activity Logger;\\ \\
-	ChromeLogger is a keylogger and form grabber for Google Chrome that runs as an extension.	
-	ChromeLogger works by injecting javascript into all loaded web pages. This extension hasn't been developed by us, but we want to talk about it because the way this extension works is very interesting and it is a serious threat.\\ \\
-	Stealth Screenshot makes screenshots of the active tab based on a timer and keep them until every opened tab is closed. Users can access with a combination of key to all screenshots taken during the session. \\ \\
-	Activity Logger keep trace of all events related to extension and save them in Chrome storage. Users can check if there are installation, uninstallation, activation or deactivation of Chrome extension due to malicious code running in background.\\ \\
-	All extensions works on the last version of Chrome (at the moment 52.0.2743.116 m)
+	Google Chrome browser is known for it huge amount of extensions that let users do almost everything they want, but there are also malicious extensions that aim to steal personal information about the life, bank accounts and every other single piece of information of the users. In this paper we presents three extensions: ChromeLogger \cite{ChromeLogger}, Stealth Screenshot and Activity Logger;
+	Our initial idea was to create a monitor for exention and integrate in Chromelogger (that has a GNU license) other malicious functionalities. For this paper purpose we haven't touched the original ChromeLogger, but we developed an additional extension that aims to integrate with it (only few modifications to the manifest are needed, because all of the code is developed as listeners and is very portable.
+	\paragraph{}ChromeLogger is a keylogger and form grabber for Google Chrome that runs as an extension.	
+	ChromeLogger works by injecting javascript into all loaded web pages. This extension hasn't been developed by us, but we want to talk about it because the way this extension works is very interesting and it is a serious threat.
+	\paragraph{}Stealth Screenshot makes screenshots of the active tab based on a timer and keep them until every opened tab is closed. Users can access with a combination of key to all screenshots taken during the session, keeping a log of the sites.\paragraph{} \cite{ChromeLogger}) with some other malicious functionality
+	\paragraph{}Activity Logger keeps trace of all events related to extension and save them in Chrome storage. Users can check if there are installation, uninstallation, activation or deactivation of Chrome extension due to malicious code running in background.
+	\paragraph{}All extensions works on the last version of Chrome (at the moment 52.0.2743.116 m).
+	\section{Related work}
 \section*{How Chrome Extension works}
 \subsection*{Background}
 \subsubsection*{where to find an extension}
@@ -168,16 +170,15 @@ However, the user can whitelist the extension through the console.
 \subsection*{Permissions}
 Chrome requires extensions to list the
 permissions needed to access the different parts of the
-extension API. The complete list of the permissions and their interaction can be found on google developer page\cite{Google}.\\
-Extensions must also specify a list of content scripts to indicate
+extension API. The complete list of the permissions and their interaction can be retrieved on google developer page \cite{Google}.
+\paragraph{}Extensions must also specify a list of content scripts to indicate
 JavaScript files that will run inside of the web page, because this is a powerful feature that allows an extension to be indistinguishable to the web page behavior. Besides the content scripts that
 allow an extension to interact with a given page,
 Chrome also allows extensions to run scripts in a
 “background page” that often contain the
 logic and state an extension needs for the entirety
 of the browser session and do not have any visibility
-to the user.\\
-For example this is the manifest of the stealth screenshot extension:
+to the user.For example this is the manifest of the stealth screenshot extension:
 \begin{lstlisting}
 {
 "name": "Stealth Screenshot Extension",
@@ -215,7 +216,45 @@ For example this is the manifest of the stealth screenshot extension:
 }
 \end{lstlisting}
 as you can see, an extension has to declare in addition to all the permissions and all the interaction it has with the user such as an input in the omnibox or the click on the icon.
+\section*{Activity Logger Extension}
+The source code of the extension (not fully functional) we developed is downloadable \href{https://github.com/andreamultineddu/Activity-Logger}{here}
+\subsection*{Scope of the extension}
+The extension aims to keep traces about the activities of other extensions and let the user know
+about them through a dedicate page in which can check for every extension that are installed on the
+Chrome browser. This logger keep traces of logs even if some extensions are uninstalled. \\
+The extension makes use of the following permission the manifest file:
+\begin{itemize}
+	\item  management
+	\item  storage
+	\item  unlimitedStorage
+\end{itemize}
+\subsection*{How the extension work}
+The extension at the browser start check the list of installed extension and updates the logs list with the one missing from it.
+After this first check and update we create listener for the events related to extensions which are: 
+\begin{itemize}
+	\item  chrome.management.onInstalled
+	\item  chrome.management.onUninstalled
+	\item  chrome.management.onEnabled
+	\item  chrome.management.onDisabled
+\end{itemize}
+Every time the user or some malicious code install, uninstall, enable or disable an extension a log of the triggered event is saved in the specific event log for the specific extension in the Chrome storage.
+The computation time is defined by the computation time of the Chrome search in his storage.
+\subsection*{Performance}
+There aren't expensive operations or recursive function calls that requires a lot of computation so we can state that the impact on the CPU is negligible.
+\subsection*{Limitations}
+The main limitation of this extension can be reconducted to the limitation imposed by or to the absence of Chrome APIs.
+At the moment we can just check the events described early in the paper, every other event defined in Chrome APIs and the presence or the absence of listener for a specific event.
+A better control on browser activity could be achieved by adding APIs, for example that return the name of extension from which is running codes in response to a specific event.
+\subsection*{Future work}
+The final aims of this extension are to log every single activity of installed extensions and jasvacript scripts inside web pages in response to every event happening inside Chrome itself (like a modification inside the Chrome storage area) or the web pages visited by the user (the pressure of a button) and let the user check these logs	in order to let users check some strange and unwanted activities caused by some malicious code. At this time, for what we have find out from our research on Chrome API documentation we can just check if there is some code waiting a specific events that trigger it.
+But this is also a double-edged weapon that can led to problems for privacy maintenance because let every user, capable of writing Chrome extension the possibility to check every activity, but from the other hands let malicious users the possibility  on customizable browsers to get knowledge about users routines, personal data and ad-hoc javascript code injection.
 \section*{ChromeLogger}
+There are other keylogger and form grabber, but we chose to take this extension as a base for many reasons:
+\begin{itemize}
+	\item It is in an open license, so we can modify it and use the code as we like.
+	\item It is a chrome extension, and it needs no other support application (this has some limitations on the data it can collect, but we wanted to see how malicious can be a pure chrome extension).
+	\item It is a simple, but effective, keylogger and form grabber, so we can use a easy to understand base.
+\end{itemize} 
 \subsection*{Scope of the extension}
 The extension is a form grabber for Google Chrome running natively in it without the need to install additional external software. It works on every loaded web pages acting on every form in the pages.
 The extension manages to let the user check, for every submitted form, all the keystrokes done and some additional data about the time of submission. This is done by an additional page where is possible to turn on some additional option for the form grabber and visualize all the data collected by the extension.
@@ -244,45 +283,14 @@ file: 'src/inject/payload.js'
 });
 \end{lstlisting}
 this allows the extension to add to the standard javascript of the page a malign javascript that allows the extension to receive and save all the form submitted by user and also the message submitted through social apps (for example whatsapp web)
-\subsubsection*{Performance}
+\subsection*{Performance}
 There aren't expensive operations or recursive function calls that requires a lot of computation so we can state that the impact on the CPU is negligible.
-\section*{Activity Logger Extension}
-The source code of the extension (not fully functional) we developed is downloadable \href{https://github.com/andreamultineddu/Activity-Logger}{here}
-\subsection*{Scope of the extension}
-
-The extension aims to keep traces about the activities of other extensions and let the user know
-about them through a dedicate page in which can check for every extension that are installed on the
-Chrome browser. This logger keep traces of logs even if some extensions are uninstalled. \\
-The extension makes use of the following permission the manifest file:
-\begin{itemize}
-	\item  management
-	\item  storage
-	\item  unlimitedStorage
-\end{itemize}
-\subsection*{How the extension work}
-The extension at the browser start check the list of installed extension and updates the logs list with the one missing from it.
-After this first check and update we create listener for the events related to extensions which are: 
-\begin{itemize}
-	\item  chrome.management.onInstalled
-	\item  chrome.management.onUninstalled
-	\item  chrome.management.onEnabled
-	\item  chrome.management.onDisabled
-\end{itemize}
-Every time the user or some malicious code install, uninstall, enable or disable an extension a log of the triggered event is saved in the specific event log for the specific extension in the Chrome storage.
-The computation time is defined by the computation time of the Chrome search in his storage.
-\subsubsection*{Performance}
-There aren't expensive operations or recursive function calls that requires a lot of computation so we can state that the impact on the CPU is negligible.
-\subsection*{Limitations}
-The main limitation of this extension can be reconducted to the limitation imposed by or to the absence of Chrome APIs.
-At the moment we can just check the events described early in the paper, every other event defined in Chrome APIs and the presence or the absence of listener for a specific event.
-A better control on browser activity could be achieved by adding APIs, for example that return the name of extension from which is running codes in response to a specific event.
-\subsection*{Future work}
-The final aims of this extension are to log every single activity of installed extensions and jasvacript scripts inside web pages in response to every event happening inside Chrome itself (like a modification inside the Chrome storage area) or the web pages visited by the user (the pressure of a button) and let the user check these logs	in order to let users check some strange and unwanted activities caused by some malicious code. At this time, for what we have find out from our research on Chrome API documentation we can just check if there is some code waiting a specific events that trigger it.
-But this is also a double-edged weapon that can led to problems for privacy maintenance because let every user, capable of writing Chrome extension the possibility to check every activity, but from the other hands let malicious users the possibility  on customizable browsers to get knowledge about users routines, personal data and ad-hoc javascript code injection.
 \section*{Stealth Screenshot Extension}
-The source code of the extension we developed is downloadable \href{https://github.com/Trexy94/Stealth-screenshot}{here}
-\subsection*{Scope of the extension}
-the scope of the stealth screenshot extension is to create a small prototype of an extension that catch screenshot at a regular interval with the minimum possible user interaction and obviously giving back the screenshot acquired.
+The source code of the extension we developed is downloadable \href{https://github.com/Trexy94/Stealth-screenshot}{here}. The aim of the stealth screenshot extension is to create a small prototype of an extension that catch screenshots at a regular interval with the minimum possible user interaction and obviously giving back the screenshot acquired and a log of the sites visited. In this case the extention is stealthed like a normal simple screenshot extension.
+\subsection*{Related work}
+For the visited website logging there are a lot of apps on the store that do the same action, obviously not for malicious interests.
+For the screenshots collection, i haven't found any extension that works in the same way: most common screenshots extensions allows the user to schedule a succession of screenshots. But the extension we propose aims to do it without user consensus, and it's a big difference.
+For the developement of this app we made no use of existing works, we used only google APIs documentation \cite{GoogleDoc}. There aren't in the literature we searched in no similar works, probably for the very limitative threat model, that presumes that you can have access to a target PC at a regular interval. However, we think that this type of attack can be an issue for example in work places. Also, if we will be able to do some improvements to the code, this can be a serious threat.
 \subsection*{How the extension work}
 \subsubsection*{Activation and screenshot collection}
 The extension uses the relatively new tab APIs given by Chrome too take screenshot.
@@ -297,12 +305,11 @@ The extension makes use of the following permissions:\begin{itemize}
 	\begin{lstlisting}
 var imglist=[];
 .............................
-// Listen for a click on the camera icon.
- On that click, take a screenshot.
+// Listen for a click on the camera icon. On that click, take a screenshot.
 chrome.browserAction.onClicked.addListener(function() {
-chrome.windows.create({type: "popup",state:"minimized"})
+chrome.windows.create({type: "popup",state:"minimized"})//the idea is this new window keeps alive chrome and screenshots, offering something interesting to the user.
 interval=0;
-while(interval<30000000)//print x times, where x is the number of milliseconds/milliseconds for screenshot
+while(interval<30000000)//print x times, where x is the number of milliseconds/milleseconds for screenshot
 {
 setTimeout(function(){Loop()},interval);    
 interval=interval+60000;
@@ -312,22 +319,25 @@ interval=interval+60000;
 function Loop (){
 chrome.tabs.captureVisibleTab(function(screenshotUrl) {
 imglist[index]=screenshotUrl;
-chrome.storage.sync.set({"data" : new Date().toJSON()}, function() {
+chrome.tabs.getSelected(null, function(tab) {list=list+tab.url+"----"+new Date().toJSON()+"\n";});
 index++;
 if (chrome.runtime.error) {
 console.log("Runtime error.");
 }
-});      
+}); 
+chrome.storage.local.set({"lista": list});
+
 }
-);};
 ............................
 	\end{lstlisting}
 	 The extension works in a simple way: it triggers on a browser event, in this case the click on the icon of the extension, but there are other possibilities: we tested that there are no simple ways to take screenshot with no interaction, because the security policy of the API doesn't allow to take a screenshot without some kind of events, presuming that the user should be aware of what is happening; not triggering any event returns only null.
 Once triggered, the extension schedule all the future screenshot through the Javascript setTimeout method: this allows to take screenshot for hours, with only the need for a click to start.
 The screenshot are stored in an array visible to all the extension methods.
+In addition a log of all the pages that were active when the screenshot was taken is saved, and stored locally. So we can try to spoof the \textsc{GET} request done by the user.
 \subsubsection*{Screenshot retrieval}
 The screenshot can be collected in two ways in the extension we developed:
-through a combination of key for retrieving all screenshots (we programmed it on Ctrl+Shift+Y) or writing "show" in the omnibox, pressing "tab" and writing in the omnibox the number of screenshot to show (starting from the last one).
+through a combination of key for retrieving all screenshots (we programmed it on Ctrl+Shift+Y) or writing "show" in the omnibox, pressing "tab" and writing in the omnibox the number of screenshot to show (starting from the last one). Writing "list" instead opens a popup with the log of the sites.
+ The log is persistent; in this prototype we chose to keep only the list of the sites in the last session, but it can be easily modified to not lose any data.
 \subsubsection*{Performance}
 We tested that the extension is able to take screenshot with a interval of 1 minute for more than 2 hours without losing any screenshot.
 The application occupy less of 50MB of RAM for an hour of screenshots taken every minute. The impact on the CPU is negligible.
@@ -349,14 +359,18 @@ Javascript inject the code for the screenshot or use it for simulate the right e
 	\end{center}
 \end{figure}
 Chrome should improve their task manager, to give the users more knowledge about what is happening in their PC, because is possible to create a timed or a smart bomb with a simple \textsc{while(true)} cycle, and it can crash Chrome, because the sandbox sometimes can't handle it.
-All the solution we have presented in this paper makes use of the most used Chrome permission, as already stated in the HULK paper\cite{HULK}
+All the solution we have presented in this paper makes use of the most used Chrome permission, as already stated in the HULK paper \cite{HULK}
 As shown in the screenshot extension, taking screenshot without user consensus should not be allowed to the API (just a popup should be enough). \\
 The ChromeLogger and Stealth Screenshot show the presence of issues reguarding the maintenance of user's privacy, and the Activity Logger can be used as a little warden against unwanted modification of extensions list. We still find out ways to bring Google Chrome to crash in a really simple way using the basics keyword of Javascript.
 
-\begin{thebibliography}{3}
+\begin{thebibliography}{4}
 	\bibitem{Google}
-	\emph{Google developer page: permissions:}
+	Google developer page-permissions
 	\href{https://developer.chrome.com/extensions/declare_permissions}{https://developer.chrome.com/extensions/\\declare\_permissions}
+	
+	\bibitem{GoogleDoc}
+	Google developer page-API
+	\href{https://developer.chrome.com/extensions/api_index}{https://developer.chrome.com/extensions/\\api\_index}
 	
 	\bibitem{ChromeLogger}
 	Eric Zhang,\\
